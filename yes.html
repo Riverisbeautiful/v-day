@@ -8,6 +8,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Styles for the love letter box */
+        #love-letter {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: -400px; /* Start off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: bottom 0.6s ease-out; /* Smooth slide-in animation */
+            width: 85%;
+            max-width: 450px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        #love-letter.open {
+            display: block;
+            bottom: 40px; /* Final slide-in position */
+        }
+
+        /* Styling for the button to look cute and match */
+        #open-letter-btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 15px;
+        }
+
+        #open-letter-btn:hover {
+            background-color: #ff1493;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
     <div class="hearts-bg"></div>
@@ -20,6 +65,17 @@
         </div>
 
         <p class="yes-message">You just made me the happiest boy!! I Love You River 💕</p>
+
+        <button id="open-letter-btn">Click for a message 💌</button>
+
+        <div id="love-letter">
+            <h2>To My Beautiful River,</h2>
+            <p>From the exact moment you walked into my life, you completely took my breath away. You are hands down the most stunning, gorgeous girl I have ever laid eyes on, and every single time I look at you, I still can't believe you're mine.</p>
+            <p>But as incredibly beautiful as you are on the outside, it’s your heart, your laugh, and the way you love me that made me realize I never want to spend a single day without you.</p>
+            <p>These past two years have been an absolute dream, and choosing you is the easiest decision I’ve ever made. I love you more than words could ever describe, and I genuinely cannot wait to finally call you my wife. You have made me the happiest boy alive today.</p>
+            <p style="font-weight: 700; margin-bottom: 5px;">Forever and always yours,</p>
+            <p style="font-size: 1.2rem; font-weight: 800;">💜 your handsome boy tony 💜</p>
+        </div>
     </div>
 
     <audio id="bg-music" loop>
@@ -29,5 +85,15 @@
     <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
 
     <script src="yes-script.js"></script>
+    <script>
+        // Script to handle the sliding love letter animation
+        const openLetterBtn = document.getElementById('open-letter-btn');
+        const loveLetter = document.getElementById('love-letter');
+
+        openLetterBtn.addEventListener('click', () => {
+            loveLetter.classList.add('open');
+            openLetterBtn.style.display = 'none'; // Safely hide button after clicking
+        });
+    </script>
 </body>
 </html>
