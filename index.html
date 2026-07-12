@@ -15,6 +15,15 @@
             margin-bottom: 20px;
             font-size: 2.2rem;
         }
+        /* Ensure buttons stay positioned correctly for the movement */
+        .buttons {
+            position: relative;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -47,7 +56,7 @@
         }
         window.onload = typeWriter;
 
-        // ORIGINAL BUTTON LOGIC
+        // ORIGINAL BOUNCY BUTTON LOGIC
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
         let yesSize = 1;
@@ -57,15 +66,18 @@
         });
 
         noBtn.addEventListener('click', () => {
+            // Grow Yes button
             yesSize += 0.2;
             yesBtn.style.transform = `scale(${yesSize})`;
             
-            // Shrink the No button
+            // Shrink No button
             const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
-            noBtn.style.fontSize = (currentNoSize * 0.9) + "px";
+            noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
             
-            // Optional: make No button move or disappear eventually
-            if (yesSize > 2) noBtn.style.display = 'none';
+            // Make No button jump to random positions
+            noBtn.style.position = "absolute";
+            noBtn.style.left = Math.random() * 80 + "%";
+            noBtn.style.top = Math.random() * 80 + "%";
         });
     </script>
 </body>
