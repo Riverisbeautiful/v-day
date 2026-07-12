@@ -11,21 +11,18 @@
     <style>
         /* Styles for the love letter box */
         #love-letter {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
-            bottom: -400px; /* Start off-screen */
+            bottom: -400px;
             left: 50%;
             transform: translateX(-50%);
-            
-            /* --- FROSTED GLASS TRANSPARENCY --- */
-            background: rgba(255, 255, 255, 0.85); /* 85% solid white, 15% transparent */
-            backdrop-filter: blur(8px);            /* Blurs background artwork for readability */
-            -webkit-backdrop-filter: blur(8px);    /* iPhone/Safari support */
-            
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: bottom 0.6s ease-out; /* Smooth slide-in animation */
+            transition: bottom 0.6s ease-out;
             width: 85%;
             max-width: 450px;
             text-align: center;
@@ -34,10 +31,9 @@
 
         #love-letter.open {
             display: block;
-            bottom: 40px; /* Final slide-in position */
+            bottom: 40px;
         }
 
-        /* Styling for the button to look cute and match */
         #open-letter-btn {
             background-color: #ff69b4;
             color: white;
@@ -57,6 +53,40 @@
             background-color: #ff1493;
             transform: scale(1.05);
         }
+
+        /* Countdown Timer Styling */
+        .countdown-container {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .countdown-container:hover {
+            transform: scale(1.03);
+        }
+
+        .countdown-title {
+            font-size: 0.9rem;
+            color: #c71585;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .countdown-timer {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #d63384;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +96,6 @@
         <h1 class="yes-title">Knew you would say yes! 🎉</h1>
 
         <div class="gif-container">
-            <!-- Your original working GIF is back! -->
             <img id="cat-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating">
         </div>
 
@@ -83,6 +112,12 @@
             <p>These past two years have been an absolute dream, and choosing you is the easiest decision I’ve ever made. I love you more than words could ever describe, and I genuinely cannot wait to finally call you my wife. You have made me the happiest boy alive today.</p>
             <p style="font-weight: 700; margin-bottom: 5px;">Forever and always yours,</p>
             <p style="font-size: 1.2rem; font-weight: 800;">💜 your handsome boy tony 💜</p>
+            
+            <!-- NEW INTERACTIVE COUNTDOWN -->
+            <div class="countdown-container" onclick="timerSurprise()">
+                <div class="countdown-title">Counting down to our celebration! 💖</div>
+                <div id="timer" class="countdown-timer">00d 00h 00m 00s</div>
+            </div>
         </div>
     </div>
 
@@ -94,14 +129,49 @@
 
     <script src="yes-script.js"></script>
     <script>
-        // Script to handle the sliding love letter animation
         const openLetterBtn = document.getElementById('open-letter-btn');
         const loveLetter = document.getElementById('love-letter');
 
         openLetterBtn.addEventListener('click', () => {
             loveLetter.classList.add('open');
-            openLetterBtn.style.display = 'none'; // Safely hide button after clicking
+            openLetterBtn.style.display = 'none';
         });
+
+        // LIVE COUNTDOWN SCRIPT
+        function updateCountdown() {
+            const now = new Date();
+            // Automatically targets the 28th of the current month
+            let targetDate = new Date(now.getFullYear(), now.getMonth(), 28, 0, 0, 0);
+            
+            // If the 28th passed this month, target next month's 28th
+            if (now > targetDate) {
+                targetDate = new Date(now.getFullYear(), now.getMonth() + 1, 28, 0, 0, 0);
+            }
+
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').innerHTML = 
+                `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+        }
+
+        // Run immediately and update every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Click interaction for the timer widget
+        function timerSurprise() {
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.85 },
+                colors: ['#ff69b4', '#ff1493', '#c71585']
+            });
+        }
     </script>
 </body>
 </html>
