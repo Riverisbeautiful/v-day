@@ -12,7 +12,7 @@ body {
     align-items: center;
     overflow: hidden;
     
-    /* --- CUSTOM BACKGROUND ARTWORK ADDED HERE --- */
+    /* Custom Background Artwork Layout */
     background-image: url('background.png'); /* Ensure your uploaded image is named exactly background.png */
     background-size: cover;
     background-position: center;
@@ -96,8 +96,9 @@ h1 {
     flex-wrap: wrap;
 }
 
+/* YES BUTTON - Bright Pink */
 #yes-btn {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+    background: linear-gradient(135deg, #ff69b4, #ff1493); /* Bright pink gradient */
     color: white;
     border: none;
     border-radius: 16px;
@@ -107,21 +108,22 @@ h1 {
     padding: 18px 45px;
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.45);       /* Glowing bright pink shadow */
     letter-spacing: 1px;
 }
 
 #yes-btn:hover {
     transform: scale(1.06) translateY(-2px);
-    box-shadow: 0 10px 28px rgba(76, 175, 80, 0.55);
+    box-shadow: 0 10px 28px rgba(255, 20, 147, 0.6);        /* Brighter hover glow */
 }
 
 #yes-btn:active {
     transform: scale(0.98);
 }
 
+/* NO BUTTON - Dark Pink */
 #no-btn {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, #c71585, #8b008b); /* Dark pink / deep magenta gradient */
     color: white;
     border: none;
     border-radius: 12px;
@@ -131,11 +133,11 @@ h1 {
     padding: 12px 28px;
     cursor: pointer;
     transition: background 0.2s, left 0.25s ease, top 0.25s ease;
-    box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4);
+    box-shadow: 0 4px 14px rgba(139, 0, 139, 0.4);         /* Subtle dark pink shadow */
 }
 
 #no-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
+    background: linear-gradient(135deg, #8b008b, #4a004a); /* Even darker pink on hover */
 }
 
 #tease-toast {
