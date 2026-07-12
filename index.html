@@ -6,7 +6,6 @@
     <title>Will you marry me, River? 💍</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Ensures the buttons container handles the absolute positioning of the No button */
         .buttons {
             position: relative;
             min-height: 150px;
@@ -50,8 +49,8 @@
             "Are you really saying no?"
         ];
 
+        // This is the ONLY place that handles the click
         yesBtn.addEventListener('click', () => {
-            // Check if she has clicked 'No' enough times
             if (noClicks >= 5) {
                 window.location.href = 'yes.html';
             } else {
@@ -62,26 +61,20 @@
         noBtn.addEventListener('click', () => {
             noClicks++;
             
-            // Change button text
             noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
             
-            // Grow Yes button
             yesSize += 0.2;
             yesBtn.style.transform = `scale(${yesSize})`;
             
-            // Shrink No button
             const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
             noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
             
-            // Move No button to random position
             noBtn.style.position = "absolute";
             noBtn.style.left = Math.random() * 80 + "%";
             noBtn.style.top = Math.random() * 80 + "%";
 
-            // Update GIF to the sad/surprised one
             catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
 
-            // If clicked many times, hide the No button
             if (noClicks >= 7) {
                 noBtn.style.display = 'none';
             }
