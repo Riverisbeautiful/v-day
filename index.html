@@ -3,34 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will you marry me River? 💍</title>
+    <title>A Question for You 💖</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        #typewriter-text {
+            min-height: 1.2em;
+            color: #d63384;
+            font-weight: 900;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+    </style>
 </head>
 <body>
     <div class="hearts-bg"></div>
 
     <div class="container">
-        <h1>Will you marry me River? 💍</h1>
+        <!-- 1. TYPEWRITER HEADING -->
+        <h1 id="typewriter-text"></h1>
 
         <div class="gif-container">
-            <img id="cat-gif" src="https://media.tenor.com/EBV7OT7ACfwAAAAj/u-u-qua-qua-u-quaa.gif" alt="cute character">
+            <!-- The Proposal/Ring GIF -->
+            <img id="cat-gif" src="https://media.tenor.com/t1-kF6eR_S0AAAAi/ring-proposal.gif" alt="proposal">
         </div>
 
         <div class="buttons">
-            <button id="yes-btn" onclick="handleYesClick()">Yes</button>
-            <button id="no-btn" onclick="handleNoClick()">No</button>
+            <button id="yes-btn" onclick="window.location.href='yes.html'">Yes! 💕</button>
+            <!-- 2. PLAYFUL NO BUTTON -->
+            <button id="no-btn">No</button>
         </div>
-        <div id="tease-toast"></div>
     </div>
 
-    <audio id="bg-music" loop autoplay muted>
-        <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
-    </audio>
+    <script>
+        // TYPEWRITER EFFECT
+        const text = "Will you marry me, River? 💍";
+        const element = document.getElementById("typewriter-text");
+        let i = 0;
 
-    <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
+        function typeWriter() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        window.onload = typeWriter;
 
-    <script src="script.js"></script>
+        // PLAYFUL NO BUTTON
+        const noBtn = document.getElementById('no-btn');
+        const phrases = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "But... I love you! 🥺",
+            "Don't break my heart!",
+            "Are you really saying no?"
+        ];
+
+        noBtn.addEventListener('click', () => {
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        });
+        
+        noBtn.addEventListener('mouseover', () => {
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        });
+    </script>
 </body>
 </html>
