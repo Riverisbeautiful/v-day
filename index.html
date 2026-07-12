@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .buttons { position: relative; min-height: 150px; display: flex; justify-content: center; align-items: center; gap: 20px; }
-        #warning-text { color: #d63384; font-weight: bold; margin-top: 15px; min-height: 1.2em; }
-        #counter-text { color: #666; font-size: 0.9rem; margin-top: 5px; }
     </style>
 </head>
 <body>
+    <audio id="bg-music" loop>
+        <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
+    </audio>
+
     <div class="container">
         <h1>Will you marry me, River? 💍</h1>
         <div class="gif-container">
@@ -22,40 +24,50 @@
             <button id="yes-btn">Yes! 💕</button>
             <button id="no-btn">No</button>
         </div>
-        
-        <p id="warning-text"></p>
-        <p id="counter-text">Click "No" 5 times to unlock "Yes"!</p>
     </div>
 
     <script>
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        const warningText = document.getElementById('warning-text');
-        const counterText = document.getElementById('counter-text');
-        let noClicks = 0;
-        const targetClicks = 5;
+        const catGif = document.getElementById('cat-gif');
+        const audio = document.getElementById('bg-music');
+        
+        let yesSize = 1;
+        const phrases = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "But... I love you! 🥺",
+            "Don't break my heart!",
+            "Are you really saying no?"
+        ];
+
+        // This triggers audio on the first interaction
+        function playAudio() {
+            audio.play().catch(e => console.log("Waiting for user interaction..."));
+        }
 
         yesBtn.addEventListener('click', () => {
-            if (noClicks >= targetClicks) {
-                window.location.href = 'yes.html';
-            } else {
-                warningText.textContent = "Try pressing no first! 🥺";
-            }
+            playAudio();
+            window.location.href = 'yes.html';
         });
 
         noBtn.addEventListener('click', () => {
-            noClicks++;
-            warningText.textContent = ""; 
+            playAudio();
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
             
-            // Update counter logic
-            if (noClicks < targetClicks) {
-                counterText.textContent = `Progress: ${noClicks} / ${targetClicks}`;
-            } else {
-                counterText.textContent = "You can click Yes now! 💍";
-            }
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
             
-            // Your existing shrinking/moving logic here...
-            // ... (rest of your noBtn logic)
+            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
+            
+            noBtn.style.position = "absolute";
+            noBtn.style.left = Math.random() * 80 + "%";
+            noBtn.style.top = Math.random() * 80 + "%";
+
+            catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
         });
     </script>
 </body>
