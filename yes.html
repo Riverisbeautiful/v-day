@@ -12,27 +12,25 @@
         #love-letter {
             display: none;
             position: fixed;
-            bottom: -100vh;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             width: 90%;
-            max-width: 460px;
-            text-align: center;
+            max-width: 450px;
+            max-height: 75vh;
+            overflow-y: auto; /* This allows scrolling to find the music player */
             z-index: 10;
-            max-height: 80vh;
-            overflow-y: auto;
+            text-align: center;
         }
 
         #love-letter.open {
             display: block;
-            bottom: 20px;
         }
 
         #open-letter-btn {
@@ -46,13 +44,7 @@
             border-radius: 25px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(255, 20, 147, 0.3);
-            transition: transform 0.2s, background-color 0.2s;
             margin-top: 15px;
-        }
-
-        #open-letter-btn:hover {
-            background-color: #ff1493;
-            transform: scale(1.05);
         }
 
         .reasons-box {
@@ -63,116 +55,31 @@
             text-align: left;
         }
 
-        .reasons-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #d63384;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+        .reasons-title { font-size: 1rem; font-weight: 800; color: #d63384; margin-bottom: 10px; text-align: center; }
+        .reason-item { font-size: 0.9rem; color: #4a4a4a; margin-bottom: 8px; line-height: 1.4; }
 
-        .reason-item {
-            font-size: 0.9rem;
-            color: #4a4a4a;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            line-height: 1.4;
-        }
+        .countdown-container { margin: 20px 0; background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 12px; cursor: pointer; border: 1px solid #ffb6c1; }
+        .countdown-title { font-size: 0.8rem; color: #c71585; font-weight: 800; text-transform: uppercase; }
+        .countdown-timer { font-size: 1.2rem; font-weight: 900; color: #d63384; font-family: monospace; }
 
-        .countdown-container {
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            padding: 12px;
-            border-radius: 12px;
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
-        }
-
-        .countdown-title {
-            font-size: 0.85rem;
-            color: #c71585;
-            font-weight: 800;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .countdown-timer {
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: #d63384;
-            font-family: monospace;
-        }
-
-        .playlist-container {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-        }
-        
-        .playlist-title {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #8b008b;
-            margin-bottom: 8px;
-        }
-
-        .playlist-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .music-chip {
-            background: white;
-            border: 1px solid #ffb6c1;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .music-chip.active {
-            background-color: #ffd1dc;
-            border-color: #ff69b4;
-        }
+        .playlist-container { margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.6); border-radius: 12px; border: 1px solid #ffb6c1; }
+        .playlist-title { font-size: 0.85rem; font-weight: 800; color: #8b008b; margin-bottom: 10px; }
+        .playlist-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .music-chip { background: white; border: 1px solid #ffb6c1; padding: 8px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+        .music-chip.active { background-color: #ffd1dc; border-color: #ff69b4; }
     </style>
 </head>
 <body>
     <div class="hearts-bg"></div>
-
     <div class="container yes-container">
         <h1 class="yes-title">Knew you would say yes! 🎉</h1>
-
-        <div class="gif-container">
-            <img id="cat-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating">
-        </div>
-
+        <div class="gif-container"><img id="cat-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif"></div>
         <p class="yes-message">You just made me the happiest boy! I Love You River 💕</p>
-
         <button id="open-letter-btn">Click for a message 💌</button>
 
         <div id="love-letter">
             <h2>To My Beautiful River,</h2>
             <p>From the exact moment you walked into my life, you completely took my breath away. You are hands down the most stunning, gorgeous girl I have ever laid eyes on, and every single time I look at you, I still can't believe you're mine.</p>
-            
-            <p>But as incredibly beautiful as you are on the outside, it’s your heart, your laugh, and the way you love me that made me realize I never want to spend a single day without you.</p>
-
             <div class="reasons-box">
                 <div class="reasons-title">✨ Little reminders of why I love you...</div>
                 <div class="reason-item">🌸 The way your smile can completely reset even my hardest days.</div>
@@ -180,10 +87,8 @@
                 <div class="reason-item">🐱 How sweet and caring you are, down to the way you love Toby.</div>
                 <div class="reason-item">💫 The absolute certainty I feel knowing you are my future and my forever.</div>
             </div>
-
-            <p>These past two years have been an absolute dream, and choosing you is the easiest decision I’ve ever made. I love you more than words could ever describe, and I genuinely cannot wait to finally call you my wife. You have made me the happiest boy alive today.</p>
-            <p style="font-weight: 700; margin-bottom: 5px;">Forever and always yours,</p>
-            <p style="font-size: 1.2rem; font-weight: 800;">💜 your handsome boy tony 💜</p>
+            <p>These past two years have been an absolute dream. I love you more than words could ever describe, and I genuinely cannot wait to finally call you my wife.</p>
+            <p><b>💜 your handsome boy tony 💜</b></p>
             
             <div class="countdown-container" onclick="timerSurprise()">
                 <div class="countdown-title">Counting down to our celebration! 💖</div>
@@ -201,78 +106,41 @@
         </div>
     </div>
 
-    <audio id="bg-music" loop>
-        <source id="music-source" src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="bg-music" loop><source id="music-source" src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg"></audio>
     <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
 
     <script src="yes-script.js"></script>
     <script>
-        const openLetterBtn = document.getElementById('open-letter-btn');
-        const loveLetter = document.getElementById('love-letter');
-        const bgMusic = document.getElementById('bg-music');
-        const musicSource = document.getElementById('music-source');
-
-        openLetterBtn.addEventListener('click', () => {
-            loveLetter.classList.add('open');
-            openLetterBtn.style.display = 'none';
+        document.getElementById('open-letter-btn').addEventListener('click', function() {
+            document.getElementById('love-letter').classList.add('open');
+            this.style.display = 'none';
         });
 
         function updateCountdown() {
             const now = new Date();
-            let targetDate = new Date(now.getFullYear(), now.getMonth(), 28, 0, 0, 0);
-            
-            if (now > targetDate) {
-                targetDate = new Date(now.getFullYear(), now.getMonth() + 1, 28, 0, 0, 0);
-            }
-
-            const difference = targetDate - now;
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById('timer').innerHTML = 
-                `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+            let target = new Date(now.getFullYear(), now.getMonth(), 28);
+            if (now > target) target = new Date(now.getFullYear(), now.getMonth() + 1, 28);
+            const diff = target - now;
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            const s = Math.floor((diff % (1000*60)) / 1000);
+            document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
         }
-
-        updateCountdown();
         setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-        function timerSurprise() {
-            confetti({
-                particleCount: 50,
-                spread: 60,
-                origin: { y: 0.85 },
-                colors: ['#ff69b4', '#ff1493', '#c71585']
-            });
-        }
+        function timerSurprise() { confetti({ particleCount: 50, colors: ['#ff69b4'] }); }
 
-        function changeTrack(trackName) {
-            document.querySelectorAll('.music-chip').forEach(chip => chip.classList.remove('active'));
-            let audioFile = '';
-            
-            if (trackName === 'glue') {
-                document.getElementById('chip-glue').classList.add('active');
-                audioFile = 'music/beabadoobee - Glue Song (Lyrics).mp3';
-                confetti({ particleCount: 30, colors: ['#ff1493', '#ff69b4'] });
-            } 
-            else if (trackName === 'txt') {
-                document.getElementById('chip-txt').classList.add('active');
-                audioFile = 'music/txt-track.mp3'; 
-                confetti({ particleCount: 40, colors: ['#00bfff', '#ffdf00'] });
-            } 
-            else if (trackName === 'illit') {
-                document.getElementById('chip-illit').classList.add('active');
-                audioFile = 'music/illit-track.mp3'; 
-                confetti({ particleCount: 40, colors: ['#ffb6c1', '#e6e6fa'] });
-            }
-
-            bgMusic.pause();
-            musicSource.src = audioFile;
-            bgMusic.load();
-            bgMusic.play().catch(e => console.log("Audio play interrupted"));
+        function changeTrack(track) {
+            document.querySelectorAll('.music-chip').forEach(c => c.classList.remove('active'));
+            let src = '';
+            if(track === 'glue') { src = 'music/beabadoobee - Glue Song (Lyrics).mp3'; document.getElementById('chip-glue').classList.add('active'); }
+            else if(track === 'txt') { src = 'music/txt-track.mp3'; document.getElementById('chip-txt').classList.add('active'); }
+            else if(track === 'illit') { src = 'music/illit-track.mp3'; document.getElementById('chip-illit').classList.add('active'); }
+            const audio = document.getElementById('bg-music');
+            document.getElementById('music-source').src = src;
+            audio.load(); audio.play();
         }
     </script>
 </body>
