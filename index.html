@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will you marry me?</title>
+    <title>Will you marry me, River? 💍</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensures the buttons container handles the absolute positioning of the No button */
+        .buttons {
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="hearts-bg"></div>
@@ -28,6 +39,7 @@
         const catGif = document.getElementById('cat-gif');
         
         let yesSize = 1;
+        let noClicks = 0;
         const phrases = [
             "Are you sure?",
             "Really sure?",
@@ -39,10 +51,17 @@
         ];
 
         yesBtn.addEventListener('click', () => {
-            window.location.href = 'yes.html';
+            // Check if she has clicked 'No' enough times
+            if (noClicks >= 5) {
+                window.location.href = 'yes.html';
+            } else {
+                alert("Try pressing no first! 🥺");
+            }
         });
 
         noBtn.addEventListener('click', () => {
+            noClicks++;
+            
             // Change button text
             noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
             
@@ -59,8 +78,13 @@
             noBtn.style.left = Math.random() * 80 + "%";
             noBtn.style.top = Math.random() * 80 + "%";
 
-            // Update GIF to a "sad/surprised" one
+            // Update GIF to the sad/surprised one
             catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
+
+            // If clicked many times, hide the No button
+            if (noClicks >= 7) {
+                noBtn.style.display = 'none';
+            }
         });
     </script>
 </body>
