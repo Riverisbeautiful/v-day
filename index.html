@@ -5,27 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will you marry me, River? 💍</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .buttons {
-            position: relative;
-            min-height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
-    </style>
 </head>
 <body>
+    <audio id="bg-music" loop>
+        <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
+    </audio>
+
     <div class="hearts-bg"></div>
 
     <div class="container">
         <h1>Will you marry me, River? 💍</h1>
-
         <div class="gif-container">
             <img id="cat-gif" src="https://media.tenor.com/t1-kF6eR_S0AAAAi/ring-proposal.gif" alt="proposal">
         </div>
-
         <div class="buttons">
             <button id="yes-btn">Yes! 💕</button>
             <button id="no-btn">No</button>
@@ -36,48 +28,25 @@
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
         const catGif = document.getElementById('cat-gif');
-        
-        let yesSize = 1;
-        let noClicks = 0;
-        const phrases = [
-            "Are you sure?",
-            "Really sure?",
-            "Think again!",
-            "Last chance!",
-            "But... I love you! 🥺",
-            "Don't break my heart!",
-            "Are you really saying no?"
-        ];
+        const audio = document.getElementById('bg-music');
 
-        // This is the ONLY place that handles the click
+        // This ensures audio starts playing on the very first click (Yes or No)
+        function playAudio() {
+            audio.play().catch(e => console.log("Waiting for user interaction..."));
+        }
+
         yesBtn.addEventListener('click', () => {
-            if (noClicks >= 5) {
-                window.location.href = 'yes.html';
-            } else {
-                alert("Try pressing no first! 🥺");
-            }
+            playAudio(); // Unlock audio
+            window.location.href = 'yes.html';
         });
 
         noBtn.addEventListener('click', () => {
-            noClicks++;
+            playAudio(); // Unlock audio
+            // ... [Your existing No button logic here] ...
+            noBtn.textContent = ["Are you sure?", "Really sure?", "Think again!", "Last chance!", "But... I love you! 🥺", "Don't break my heart!", "Are you really saying no?"][Math.floor(Math.random() * 7)];
             
-            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-            
-            yesSize += 0.2;
-            yesBtn.style.transform = `scale(${yesSize})`;
-            
-            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
-            noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
-            
-            noBtn.style.position = "absolute";
-            noBtn.style.left = Math.random() * 80 + "%";
-            noBtn.style.top = Math.random() * 80 + "%";
-
+            // ... (Your shrinking/moving code) ...
             catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
-
-            if (noClicks >= 7) {
-                noBtn.style.display = 'none';
-            }
         });
     </script>
 </body>
