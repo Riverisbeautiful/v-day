@@ -13,7 +13,7 @@
         #love-letter {
             display: none;
             position: fixed;
-            bottom: -400px;
+            bottom: -450px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.85);
@@ -31,7 +31,7 @@
 
         #love-letter.open {
             display: block;
-            bottom: 40px;
+            bottom: 30px;
         }
 
         #open-letter-btn {
@@ -54,38 +54,80 @@
             transform: scale(1.05);
         }
 
-        /* Countdown Timer Styling */
         .countdown-container {
-            margin-top: 25px;
+            margin-top: 20px;
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
             display: inline-block;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             cursor: pointer;
             transition: transform 0.2s;
+            width: 100%;
         }
 
         .countdown-container:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
         .countdown-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #c71585;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .countdown-timer {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: #d63384;
             font-family: monospace;
+        }
+
+        /* MOBILE MUSIC JUKEBOX STYLING */
+        .playlist-container {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+        }
+        
+        .playlist-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #8b008b;
+            margin-bottom: 8px;
+        }
+
+        .playlist-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .music-chip {
+            background: white;
+            border: 1px solid #ffb6c1;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            -webkit-tap-highlight-color: transparent; /* Prevents weird mobile gray flashing when tapped */
+        }
+
+        .music-chip.active {
+            background-color: #ffd1dc;
+            border-color: #ff69b4;
         }
     </style>
 </head>
@@ -113,16 +155,27 @@
             <p style="font-weight: 700; margin-bottom: 5px;">Forever and always yours,</p>
             <p style="font-size: 1.2rem; font-weight: 800;">💜 your handsome boy tony 💜</p>
             
-            <!-- NEW INTERACTIVE COUNTDOWN -->
+            <!-- LIVE COUNTDOWN -->
             <div class="countdown-container" onclick="timerSurprise()">
                 <div class="countdown-title">Counting down to our celebration! 💖</div>
                 <div id="timer" class="countdown-timer">00d 00h 00m 00s</div>
             </div>
+
+            <!-- INTERACTIVE MOBILE JUKEBOX -->
+            <div class="playlist-container">
+                <div class="playlist-title">🎵 Change the Background Track 🎵</div>
+                <div class="playlist-buttons">
+                    <div id="chip-glue" class="music-chip active" onclick="changeTrack('glue')">✨ Glue Song</div>
+                    <div id="chip-txt" class="music-chip" onclick="changeTrack('txt')">🌟 TXT Track</div>
+                    <div id="chip-illit" class="music-chip" onclick="changeTrack('illit')">🌸 ILLIT Track</div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Background Music Holder -->
     <audio id="bg-music" loop>
-        <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
+        <source id="music-source" src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
     </audio>
 
     <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
@@ -131,19 +184,18 @@
     <script>
         const openLetterBtn = document.getElementById('open-letter-btn');
         const loveLetter = document.getElementById('love-letter');
+        const bgMusic = document.getElementById('bg-music');
+        const musicSource = document.getElementById('music-source');
 
         openLetterBtn.addEventListener('click', () => {
             loveLetter.classList.add('open');
             openLetterBtn.style.display = 'none';
         });
 
-        // LIVE COUNTDOWN SCRIPT
         function updateCountdown() {
             const now = new Date();
-            // Automatically targets the 28th of the current month
             let targetDate = new Date(now.getFullYear(), now.getMonth(), 28, 0, 0, 0);
             
-            // If the 28th passed this month, target next month's 28th
             if (now > targetDate) {
                 targetDate = new Date(now.getFullYear(), now.getMonth() + 1, 28, 0, 0, 0);
             }
@@ -159,11 +211,9 @@
                 `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
         }
 
-        // Run immediately and update every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Click interaction for the timer widget
         function timerSurprise() {
             confetti({
                 particleCount: 50,
@@ -171,6 +221,38 @@
                 origin: { y: 0.85 },
                 colors: ['#ff69b4', '#ff1493', '#c71585']
             });
+        }
+
+        // MOBILE JUKEBOX ENGINE
+        function changeTrack(trackName) {
+            // Remove active style from all chips
+            document.querySelectorAll('.music-chip').forEach(chip => chip.classList.remove('active'));
+            
+            let audioFile = '';
+            
+            if (trackName === 'glue') {
+                document.getElementById('chip-glue').classList.add('active');
+                audioFile = 'music/beabadoobee - Glue Song (Lyrics).mp3';
+                confetti({ particleCount: 30, colors: ['#ff1493', '#ff69b4'] });
+            } 
+            else if (trackName === 'txt') {
+                document.getElementById('chip-txt').classList.add('active');
+                // Put your TXT .mp3 file name inside your music folder here!
+                audioFile = 'music/txt-track.mp3'; 
+                confetti({ particleCount: 40, colors: ['#00bfff', '#ffdf00'] });
+            } 
+            else if (trackName === 'illit') {
+                document.getElementById('chip-illit').classList.add('active');
+                // Put your ILLIT .mp3 file name inside your music folder here!
+                audioFile = 'music/illit-track.mp3'; 
+                confetti({ particleCount: 40, colors: ['#ffb6c1', '#e6e6fa'] });
+            }
+
+            // Smoothly switch tracks on the fly without breaking layout
+            bgMusic.pause();
+            musicSource.src = audioFile;
+            bgMusic.load();
+            bgMusic.play().catch(e => console.log("Audio play interrupted"));
         }
     </script>
 </body>
