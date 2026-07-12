@@ -21,17 +21,14 @@
     <div class="hearts-bg"></div>
 
     <div class="container">
-        <!-- 1. TYPEWRITER HEADING -->
         <h1 id="typewriter-text"></h1>
 
         <div class="gif-container">
-            <!-- The Proposal/Ring GIF -->
             <img id="cat-gif" src="https://media.tenor.com/t1-kF6eR_S0AAAAi/ring-proposal.gif" alt="proposal">
         </div>
 
         <div class="buttons">
-            <button id="yes-btn" onclick="window.location.href='yes.html'">Yes! 💕</button>
-            <!-- 2. PLAYFUL NO BUTTON -->
+            <button id="yes-btn">Yes! 💕</button>
             <button id="no-btn">No</button>
         </div>
     </div>
@@ -41,7 +38,6 @@
         const text = "Will you marry me, River? 💍";
         const element = document.getElementById("typewriter-text");
         let i = 0;
-
         function typeWriter() {
             if (i < text.length) {
                 element.innerHTML += text.charAt(i);
@@ -51,24 +47,25 @@
         }
         window.onload = typeWriter;
 
-        // PLAYFUL NO BUTTON
+        // ORIGINAL BUTTON LOGIC
+        const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        const phrases = [
-            "Are you sure?",
-            "Really sure?",
-            "Think again!",
-            "Last chance!",
-            "But... I love you! 🥺",
-            "Don't break my heart!",
-            "Are you really saying no?"
-        ];
+        let yesSize = 1;
+
+        yesBtn.addEventListener('click', () => {
+            window.location.href = 'yes.html';
+        });
 
         noBtn.addEventListener('click', () => {
-            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-        });
-        
-        noBtn.addEventListener('mouseover', () => {
-            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            // Shrink the No button
+            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            noBtn.style.fontSize = (currentNoSize * 0.9) + "px";
+            
+            // Optional: make No button move or disappear eventually
+            if (yesSize > 2) noBtn.style.display = 'none';
         });
     </script>
 </body>
