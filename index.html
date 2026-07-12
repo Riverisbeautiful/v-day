@@ -6,10 +6,12 @@
     <title>Will you marry me, River? 💍</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        .container { text-align: center; margin-top: 50px; }
         .buttons { position: relative; min-height: 150px; display: flex; justify-content: center; align-items: center; gap: 20px; }
-        /* These styles keep the warning and counter clean on the screen */
         #warning-text { color: #d63384; font-weight: bold; margin-top: 15px; min-height: 1.2em; }
         #counter-text { color: #666; font-size: 0.9rem; margin-top: 5px; }
+        #yes-btn { transition: transform 0.2s; }
+        #no-btn { position: absolute; transition: all 0.2s; }
     </style>
 </head>
 <body>
@@ -37,38 +39,52 @@
         const noBtn = document.getElementById('no-btn');
         const warningText = document.getElementById('warning-text');
         const counterText = document.getElementById('counter-text');
+        const catGif = document.getElementById('cat-gif');
         const audio = document.getElementById('bg-music');
+        
         let noClicks = 0;
         const targetClicks = 5;
+        let yesSize = 1;
 
-        // Audio helper
+        // Audio Helper
         function playAudio() {
             audio.play().catch(e => console.log("Waiting for user interaction..."));
         }
 
+        // Yes Button Logic
         yesBtn.addEventListener('click', () => {
-            playAudio(); 
+            playAudio();
             if (noClicks >= targetClicks) {
                 window.location.href = 'yes.html';
             } else {
-                // This displays the message on the page instead of a pop-up
                 warningText.textContent = "Try pressing no first! 🥺";
             }
         });
 
+        // No Button Logic
         noBtn.addEventListener('click', () => {
             playAudio();
             noClicks++;
-            warningText.textContent = ""; // Clear the warning
+            warningText.textContent = ""; 
             
-            // Update counter text
+            // Update counter
             if (noClicks < targetClicks) {
                 counterText.textContent = `Progress: ${noClicks} / ${targetClicks}`;
             } else {
                 counterText.textContent = "You can click Yes now! 💍";
             }
             
-            // ... (Your existing No button movement/shrinking code would go here)
+            // Movement/Shrinking logic
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
+            
+            noBtn.style.left = Math.random() * 80 + "%";
+            noBtn.style.top = Math.random() * 60 + "%";
+
+            catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
         });
     </script>
 </body>
