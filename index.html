@@ -25,13 +25,27 @@
     <script>
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
+        const catGif = document.getElementById('cat-gif');
+        
         let yesSize = 1;
+        const phrases = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "But... I love you! 🥺",
+            "Don't break my heart!",
+            "Are you really saying no?"
+        ];
 
         yesBtn.addEventListener('click', () => {
             window.location.href = 'yes.html';
         });
 
         noBtn.addEventListener('click', () => {
+            // Change button text
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+            
             // Grow Yes button
             yesSize += 0.2;
             yesBtn.style.transform = `scale(${yesSize})`;
@@ -44,6 +58,9 @@
             noBtn.style.position = "absolute";
             noBtn.style.left = Math.random() * 80 + "%";
             noBtn.style.top = Math.random() * 80 + "%";
+
+            // Update GIF to a "sad/surprised" one
+            catGif.src = "https://media.tenor.com/tC666gJv6-QAAAAi/cat-sad.gif";
         });
     </script>
 </body>
