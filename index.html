@@ -3,34 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Question for You 💖</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <title>Will you marry me?</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        #typewriter-text {
-            min-height: 1.2em;
-            color: #d63384;
-            font-weight: 900;
-            margin-bottom: 20px;
-            font-size: 2.2rem;
-        }
-        /* Ensure buttons stay positioned correctly for the movement */
-        .buttons {
-            position: relative;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-        }
-    </style>
 </head>
 <body>
     <div class="hearts-bg"></div>
 
     <div class="container">
-        <h1 id="typewriter-text"></h1>
+        <h1>Will you marry me, River? 💍</h1>
 
         <div class="gif-container">
             <img id="cat-gif" src="https://media.tenor.com/t1-kF6eR_S0AAAAi/ring-proposal.gif" alt="proposal">
@@ -43,20 +23,6 @@
     </div>
 
     <script>
-        // TYPEWRITER EFFECT
-        const text = "Will you marry me, River? 💍";
-        const element = document.getElementById("typewriter-text");
-        let i = 0;
-        function typeWriter() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        window.onload = typeWriter;
-
-        // ORIGINAL BOUNCY BUTTON LOGIC
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
         let yesSize = 1;
@@ -74,7 +40,7 @@
             const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
             noBtn.style.fontSize = (currentNoSize * 0.8) + "px";
             
-            // Make No button jump to random positions
+            // Move No button to random position
             noBtn.style.position = "absolute";
             noBtn.style.left = Math.random() * 80 + "%";
             noBtn.style.top = Math.random() * 80 + "%";
